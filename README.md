@@ -1,8 +1,9 @@
 # Azure AD OAuth2 authentication in Airflow 2
-Useful links:
-https://github.com/dpgaspar/Flask-AppBuilder/blob/master/examples/oauth/config.py
-https://github.com/apache/airflow/blob/main/airflow/www/security.py
-https://awslife.medium.com/airflow-authentication-with-rbac-and-keycloak-2c34d2012059
+Useful links:  
+https://github.com/apache/airflow/blob/main/airflow/www/security.py  
+https://github.com/dpgaspar/Flask-AppBuilder/blob/master/docs/security.rst  
+https://github.com/dpgaspar/Flask-AppBuilder/blob/master/examples/oauth/config.py  
+https://awslife.medium.com/airflow-authentication-with-rbac-and-keycloak-2c34d2012059  
 
 ## 1. ON AZURE PORTAL
 ### 1.1. Create an app registration
@@ -47,8 +48,8 @@ https://awslife.medium.com/airflow-authentication-with-rbac-and-keycloak-2c34d20
                 Permission name: User.Read (Sign in and read user profile)
 
 ## 2. CONFIGURE and RUN (local test) AIRFLOW
-    webserver_config.py is used to configure authentication method.
-    Clone this repo.
+webserver_config.py is used to configure authentication method.  
+Clone this repo.
 ### 2.1. Fill env.list.template with values from 1.3 and rename it to env.list
 ### 2.2. Execute a list of commands to run Airflow webserver as a docker container
     sudo useradd airflow -u 50000 -s /usr/sbin/nologin && \
