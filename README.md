@@ -1,8 +1,8 @@
 # Azure AD OAuth2 authentication in Airflow 2
-    useful links:
-        https://github.com/dpgaspar/Flask-AppBuilder/blob/master/examples/oauth/config.py
-        https://github.com/apache/airflow/blob/main/airflow/www/security.py
-        https://awslife.medium.com/airflow-authentication-with-rbac-and-keycloak-2c34d2012059
+Useful links:
+https://github.com/dpgaspar/Flask-AppBuilder/blob/master/examples/oauth/config.py
+https://github.com/apache/airflow/blob/main/airflow/www/security.py
+https://awslife.medium.com/airflow-authentication-with-rbac-and-keycloak-2c34d2012059
 
 ## 1. ON AZURE PORTAL
 ### 1.1. Create an app registration
@@ -48,18 +48,17 @@
 
 ## 2. CONFIGURE and RUN (local test) AIRFLOW
     webserver_config.py is used to configure authentication method.
-    Clone this repo:
-        git clone <url>
+    Clone this repo.
 ### 2.1. Fill env.list.template with values from 1.3 and rename it to env.list
 ### 2.2. Execute a list of commands to run Airflow webserver as a docker container
-sudo useradd airflow -u 50000 -s /usr/sbin/nologin && \
-sudo chown -R airflow $(pwd)/airflow-oauth-azure-test/airflow && \
-docker run -d -p 8080:8080 \
-  --name airflow-webserver \
-  -v $(pwd)/airflow-oauth-azure-test/airflow:/opt/airflow \
-  --env-file $(pwd)/airflow-oauth-azure-test/env.list \
-   apache/airflow webserver && \
-sleep 60 && \
-docker exec airflow-webserver airflow db init
+    sudo useradd airflow -u 50000 -s /usr/sbin/nologin && \
+    sudo chown -R airflow $(pwd)/airflow-oauth-azure-test/airflow && \
+    docker run -d -p 8080:8080 \
+        --name airflow-webserver \
+        -v $(pwd)/airflow-oauth-azure-test/airflow:/opt/airflow \
+        --env-file $(pwd)/airflow-oauth-azure-test/env.list \
+        apache/airflow webserver && \
+    sleep 60 && \
+    docker exec airflow-webserver airflow db init
 ### 2.3. Check Azure AD OAuth2 authentication in Airflow 2
 Open http://localhost:8080 in your browser and try to authorize as an Azure user (assignment to some Airflow role should be done in 1.5).
