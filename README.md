@@ -57,8 +57,9 @@ Clone this repo.
     docker run -d -p 8080:8080 \
         --name airflow-webserver \
         -v $(pwd)/airflow-oauth-azure-test/airflow:/opt/airflow \
+        -v $(pwd)/airflow-oauth-azure-test/backend:/home/airflow/.local/lib/python3.6/site-packages/airflow/api/auth/backend \
         --env-file $(pwd)/airflow-oauth-azure-test/env.list \
-        apache/airflow webserver && \
+        apache/airflow:2.2.3 webserver && \
     sleep 60 && \
     docker exec airflow-webserver airflow db init
 ### 2.3. Check Azure AD OAuth2 authentication in Airflow 2
