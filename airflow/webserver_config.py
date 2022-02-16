@@ -74,7 +74,7 @@ OAUTH_PROVIDERS = [{
             "client_secret": AZURE_CLIENT_SECRET,
             "api_base_url": API_BASE_URL,
             "client_kwargs": {
-                "scope": "email profile",
+                "scope": "User.Read",
                 "resource": AZURE_APPLICATION_ID,
             },
             "request_token_url": None,
@@ -90,12 +90,10 @@ class AzureCustomSecurity(AirflowSecurityManager):
         id_token = response["id_token"]
         me = jwt.decode(id_token, algorithms="RS256", verify=False)
         return {
-            "name": me["name"],
+            "username": me["upn"],
             "email": me["upn"],
             "first_name": me["given_name"],
             "last_name": me["family_name"],
-            "id": me["oid"],
-            "username": me["oid"],
             "role_keys": me["roles"],
           }
     else:
