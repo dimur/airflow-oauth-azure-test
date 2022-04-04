@@ -60,12 +60,14 @@ Clone this repo.
     sudo useradd airflow -u 50000 -s /usr/sbin/nologin && \
     sudo chown -R airflow $(pwd)/airflow-oauth-azure-test/airflow && \
     sudo chown -R airflow $(pwd)/airflow-oauth-azure-test/backend && \
+    AIRFLOW_VERSION="2.2.3" && \
+    SITE_PACKAGES_PATH=$(docker run --rm "apache/airflow:${AIRFLOW_VERSION}" python -m site --user-site | tr -d '\n') && \
     docker run -d -p 8080:8080 \
         --name airflow-webserver \
         -v $(pwd)/airflow-oauth-azure-test/airflow:/opt/airflow \
-        -v $(pwd)/airflow-oauth-azure-test/backend:/home/airflow/.local/lib/python3.6/site-packages/airflow/api/auth/backend \
+        -v "$(pwd)/airflow-oauth-azure-test/backend:${SITE_PACKAGES_PATH}/airflow/api/auth/backend" \
         --env-file $(pwd)/airflow-oauth-azure-test/env.list \
-        apache/airflow:2.2.3 webserver && \
+        "apache/airflow:${AIRFLOW_VERSION}" webserver && \
     sleep 60 && \
     docker exec airflow-webserver airflow db init
 ### 2.3. Check Azure AD OAuth2 authentication in Airflow 2 (Web UI)
